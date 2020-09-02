@@ -1,0 +1,50 @@
+body
+{
+	background-color: #adad85;
+}
+
+h1
+{
+	margin: 25px 10px 35px 10px;
+	text-align: center;
+}
+
+#loginForm
+{
+	width: 600px;
+	margin: 200px auto;
+	border: solid 1px #000;
+}
+
+#nameFields
+{
+	display: none;
+}
+
+.inputfields
+{
+	margin: 10px 25px;
+	
+}
+
+#loginButton
+{
+	margin: 10px auto;
+	border: solid 3px #000;
+	border-radius: 10px;
+	width: 125px;
+	padding: 3px;
+}
+
+#loginButtondiv
+{
+	margin: 10px auto;
+	width: 131px;
+}
+
+#registerLink
+{
+	width: 80px;
+	margin: 0px auto 10px auto;
+	text-align: center;
+}

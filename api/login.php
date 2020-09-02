@@ -1,6 +1,6 @@
-// File: login.php
-// Script to login a user based on credentials collected from a JSON payload
 <?php
+    // File: login.php
+    // Script to login a user based on credentials collected from a JSON payload
     
     // retrieve json payload as JSON object
     $loginData = getJsonPayload(false);

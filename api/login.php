@@ -1,49 +1,49 @@
 <?php
     // File: login.php
     // Script to login a user based on credentials collected from a JSON payload
-    
+
     // retrieve json payload as JSON object
     $loginData = getJsonPayload(false);
-    
+
     // initialize fields to be retrieved from database
     $id = 0;
     $firstname = "";
     $lastname = "";
     $dateCreated = "";
-    
+
     // Create connection to database
     $connection = new mysqli("COTRT", "montyspythons", "Hly#andGrnd3", "montyspy_cotrt");
-    
+
     // handle connection errors
     if ($connection->connect_error)
     {
         returnError($connection->connect_error);
         exit("Encountered SQL connection error");
     }
-    
+
     // Query the database for user information
-    $query = "SELECT ID, Firstname, Lastname FROM Users where Login='" . $loginData->username . "' and Password='" . $loginData->password . "'";
-    
+    $query = "SELECT ID, Firstname, Lastname FROM Users where Login='" + $loginData->username + "' and Password= '" + $loginData->password + "'";
+
     $queryData = $connection->query($query);
-    
+
     // return with error if no users were found
     if ($queryData->num_rows < 1)
     {
         returnError("User does not exist.");
     }
-    
+
     // package the data into a JSON object
     $data = $queryData->fetch_assoc();
     $id = $data["ID"];
     $firstname = $data["Firstname"];
     $lastname = $data["Lastname"];
     $dateCreated = $data["DateCreated"];
-    
+
     // package and send the data to front-end
     $payload = packageLoginData($id, $firstname, $lastname, $dateCreated);
     deliverJsonPayload($payload);
-    
-    
+
+
     /*
     *   getJsonPayload()
     *
@@ -58,7 +58,7 @@
     {
         return json_decode(file_get_contents('php://input'), $arrayOption);
     }
-    
+
     /*
     *   packageLoginData()
     *
@@ -71,11 +71,11 @@
     */
     function packageLoginData($id, $firstname, $lastname, $dateCreated)
     {
-        $payload = '{"ID" : ' . $id . ', "Firstname" : "' . $firstname .'", "Lastname" : "' . $lastname . '", "DateCreated" : "' . $dateCreated . '", "DateLastLoggedIn" : "' . date("m/d/Y") .'", "Error" : ' . NULL . '}';
-        
+        $payload = '{"ID" : ' + $id + ', "Firstname" : "' + $firstname + '", "Lastname" : "' + $lastname + '", "DateCreated" : "' + $dateCreated + '", "DateLastLoggedIn" : "' + date("m/d/Y") +'", "Error" : ' + NULL + '}';
+
         return $payload;
     }
-    
+
     /*
     *   deliverJsonPayload()
     *
@@ -89,7 +89,7 @@
         json_encode($payload);
         echo $payload;
     }
-    
+
     /*
     *   returnError()
     *
@@ -101,7 +101,7 @@
     function returnError($error)
     {
         $payload = packageLoginData(0, "", "", "");
-        
+
         deliverJsonPayload($payload);
     }
 ?>

@@ -1,17 +1,48 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
+    <title>Contacts of the Round Table</title>
+	<!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-    <title>Contacts of the Round Table</title>
+	<link rel="stylesheet" href="css/style.css">
+	<script type="text/javascript" src="js/main.js"></script>
+	
+	<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function() 
+	{
+		readCookie();
+	}, false);
+	</script>
+	
   </head>
   <body>
+	<div class="jumbotron jumbotron-fluid">
+		<h1 id="greeting"></h1>
+		<div class="container-fluid">
+			<div class="d-flex justify-content-center">	
+				<button type="button" class="btn btn-primary btn-lg active">My Contacts</button>
+				<button type="button" class="btn btn-primary btn-lg active">Add Contact</button>
+				<button type="button" class="btn btn-primary btn-lg active">Delete Contact</button>
+				<button type="button" class="btn btn-primary btn-lg active">Search</button>
+				<button type="button" class="btn btn-primary btn-lg active" onclick="logout();">Logout</button>
+			</div>
+		</div>
+	</div>
     <h1>Contacts Page</h1>
+	
+	<div class="container-lg">
+		<div class="input-group mb-3">
+			<input type="text" class="form-control" placeholder="Search">
+			<div class="input-group-append">
+				<button class="btn btn-success" type="submit">Go</button>  
+			</div>
+		</div>
+	</div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

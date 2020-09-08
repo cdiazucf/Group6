@@ -6,7 +6,8 @@ function login()
 	var userId = 0;
 	var username = document.getElementById("username").value;
 	var password = document.getElementById("password").value;
-	var firstName, lastName;
+	var firstName = "";
+	var lastName = "";
 	//var hash = md5(password);
 	document.getElementById("loginStatus").innerHTML = "";
 		
@@ -51,7 +52,9 @@ function login()
 	}
 	else
 	{
-		var jsonPayload = '{"firstName" : "' + firstName + '", "lastName" : "' + lastName + '", "username" : "' + username + '", "password" : "' + password + '"}';
+		firstName = document.getElementById("fName").value;
+		lastName = document.getElementById("lName").value;
+		var jsonPayload = '{"firstname" : "' + firstName + '", "lastname" : "' + lastName + '", "username" : "' + username + '", "password" : "' + password + '"}';
 		var xhr = new XMLHttpRequest();
 		
 		try

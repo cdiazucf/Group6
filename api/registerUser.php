@@ -51,13 +51,14 @@
     
     // query database for record just created to return user data to front-end
     $queryStatement = "SELECT * FROM Users WHERE Username='" . $input["username"] . "';";
-    $query = $connection.query($queryStatement);
+    $query = $connection->query($queryStatement);
     
     // convert query result into associative array
     $data = $query->fetch_assoc();
     
-    returnJsonPayload($data["ID"], $data["Username"], $data["Firstname"], $data["Lastname"], $data["DateCreated"], $data["DateLastLoggedIn"], "");
     $connection->close();
+    returnJsonPayload($data["ID"], $data["Username"], $data["Firstname"], $data["Lastname"], $data["DateCreated"], $data["DateLastLoggedIn"], "");
+    http_response_code(200);
     exit();
     
     

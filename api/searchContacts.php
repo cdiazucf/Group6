@@ -15,7 +15,7 @@
         exit();
     }
     
-    $queryStatement = "SELECT * FROM Contacts WHERE UserID=" . $loginData["userID"] . " AND Firstname LIKE '%" . $loginData["firstname"] . "%' AND Lastname LIKE '%" . $loginData["lastname"] . "%';";
+    $queryStatement = "SELECT * FROM Contacts WHERE UserID=" . $loginData["userID"] . " AND Firstname LIKE '%" . $loginData["firstname"] . "%' OR Lastname LIKE '%" . $loginData["lastname"] . "%' ORDER BY Firstname;";
     $queryResult = $connection->query($queryStatement);
     
     // IF query failed

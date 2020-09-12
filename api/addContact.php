@@ -20,9 +20,9 @@
     
     // add contact to database
     $queryStatement = "INSERT INTO Contacts (UserID, Firstname, Lastname, Address, Email, Phone) " .
-                      "VALUES ('" . $loginData["ID"] . "', '" . $loginData["Firstname"] . "', '" .
-                      $loginData["Lastname"] . "', '" . $loginData["Address"] . "', '" .
-                      $loginData["Email"] . "', '" . $loginData["Phone"] . "');";
+                      "VALUES ('" . $loginData["userID"] . "', '" . $loginData["firstname"] . "', '" .
+                      $loginData["lastname"] . "', '" . $loginData["address"] . "', '" .
+                      $loginData["email"] . "', " . $loginData["phone"] . ");";
     $query = $connection->query($queryStatement);
     
     // IF query failed

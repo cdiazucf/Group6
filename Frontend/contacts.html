@@ -17,32 +17,81 @@
 	{
 		readCookie();
 	}, false);
-	</script>
-	
+	</script>	
   </head>
+  
   <body>
+	<div id="status"></div>
 	<div class="jumbotron jumbotron-fluid">
-		<h1 id="greeting"></h1>
+		<h1>Contacts Page</h1>
+		<h3 id="greeting"></h3>
 		<div class="container-fluid">
 			<div class="d-flex justify-content-center">	
-				<button type="button" class="btn btn-primary btn-lg active">My Contacts</button>
-				<button type="button" class="btn btn-primary btn-lg active">Add Contact</button>
-				<button type="button" class="btn btn-primary btn-lg active">Delete Contact</button>
-				<button type="button" class="btn btn-primary btn-lg active">Search</button>
+				<button type="button" class="btn btn-primary btn-lg active" onclick="showMyContacts();">My Contacts</button>
+				<button type="button" class="btn btn-primary btn-lg active" onclick="showForm(-1);">Add Contact</button>
 				<button type="button" class="btn btn-primary btn-lg active" onclick="logout();">Logout</button>
 			</div>
 		</div>
 	</div>
-    <h1>Contacts Page</h1>
 	
-	<div class="container-lg">
+	<div id="addInputs">
+		<div class="inputfields">
+			<label for="fName">First Name: </label>
+			<input type="text" id="fName" class="" maxlength="50" placeholder="First Name"/>
+		</div>
+		<div class="inputfields">
+			<label for="lName">Last Name: </label>
+			<input type="text" id="lName" maxlength="50" placeholder="Last Name"/>	
+		</div>
+		<div class="inputfields">
+			<label for="address1">Address 1: </label>
+			<input type="text" id="address1" maxlength="37" placeholder="Address 1"/>
+		</div>
+		<div class="inputfields">
+			<label for="address2">Address 2: </label>
+			<input type="text" id="address2" maxlength="36" placeholder="Address 2"/>
+		</div>
+		<div class="inputfields">
+			<label for="city">City: </label>
+			<input type="text" id="city" maxlength="20" placeholder="City"/>
+		</div>
+		<div class="inputfields">
+			<label for="state">State: </label>
+			<input type="text" id="state" maxlength="2" placeholder="State"/>
+		</div>
+		<div class="inputfields">
+			<label for="zip">Zip: </label>
+			<input type="text" id="zip" maxlength="5" placeholder="Zip Code"/>
+		</div>
+		<div class="inputfields">
+			<label for="phone">Phone number: </label>
+			<input type="text" id="phone" maxlength="12" placeholder="Phone Number"/>
+		</div>
+		<div class="inputfields">
+			<label for="email">Email: </label>
+			<input type="text" id="email" maxlength="50" placeholder="Email Address"/>
+		</div>
+		<div id="addBtn">
+			<button type="button" class="btn btn-secondary" onclick="add();">Add &raquo;</button>
+		</div>
+		<div id="editBtn">
+			<button type="button" class="btn btn-secondary" onclick="edit();">Edit &raquo;</button>
+		</div>
+		<div id="cancelBtn">
+			<button type="button" class="btn btn-secondary" onclick="showContacts();">Cancel</button>
+		</div>
+	</div>
+	
+	<div class="container-lg" id="searchBar">
 		<div class="input-group mb-3">
-			<input type="text" class="form-control" placeholder="Search">
+			<input type="text" class="form-control" id="searchField" placeholder="Search">
 			<div class="input-group-append">
-				<button class="btn btn-success" type="submit">Go</button>  
+				<button class="btn btn-success" type="submit" onclick="showContacts();">Go</button>  
 			</div>
 		</div>
 	</div>
+	
+	<div class="container" id="displayContacts"></div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

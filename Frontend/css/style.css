@@ -3,16 +3,16 @@ body
 	background-color: #adad85;
 }
 
-h1
+h1, h3
 {
-	margin: 25px 10px 35px 10px;
+	margin: 100px 10px 35px 10px;
 	text-align: center;
 }
 
 #loginForm
 {
 	width: 600px;
-	margin: 200px auto;
+	margin: 20px auto;
 	border: solid 1px #000;
 }
 
@@ -23,8 +23,17 @@ h1
 
 .inputfields
 {
-	margin: 10px 25px;
-	
+	margin: 10px 200px;
+}
+
+#addInputs
+{
+	display: none;
+}
+
+#pages
+{
+	display: inline;
 }
 
 #loginButton
@@ -38,13 +47,13 @@ h1
 
 #loginButtondiv
 {
-	margin: 10px auto;
+	margin: 10px auto 10px auto;
 	width: 131px;
 }
 
 #registerLink
 {
-	width: 80px;
+	width: 75%;
 	margin: 0px auto 10px auto;
 	text-align: center;
 }

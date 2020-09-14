@@ -15,7 +15,22 @@
         exit();
     }
     
-    $queryStatement = "SELECT * FROM Contacts WHERE UserID=" . $loginData["userID"] . " AND Firstname LIKE '%" . $loginData["firstname"] . "%' OR Lastname LIKE '%" . $loginData["lastname"] . "%' ORDER BY Firstname;";
+    if (strcmp($loginData["firstname"], "") != 0 and strcmp($loginData["lastname"], "") != 0)
+    {
+        $queryStatement = "SELECT * FROM Contacts WHERE UserID=" . $loginData["userID"] . " AND (Firstname LIKE '%" . $loginData["firstname"] . "%' AND Lastname LIKE '%" . $loginData["lastname"] . "%') ORDER BY Firstname;";
+    }
+    else if (strcmp($loginData["firstname"], "") != 0)
+    {
+        $queryStatement = "SELECT * FROM Contacts WHERE UserID=" . $loginData["userID"] . " AND Firstname LIKE '%" . $loginData["firstname"] . "%' ORDER BY Firstname;";
+    }
+    else if (strcmp($loginData["lastname"], "") != 0)
+    {
+        $queryStatement = "SELECT * FROM Contacts WHERE UserID=" . $loginData["userID"] . " AND  Lastname LIKE '%" . $loginData["lastname"] . "%' ORDER BY Firstname;";
+    }
+    else
+    {
+        $queryStatement = "SELECT * FROM Contacts ORDER BY Firstname;";
+    }
     $queryResult = $connection->query($queryStatement);
     
     // IF query failed

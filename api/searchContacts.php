@@ -29,7 +29,11 @@
     }
     else
     {
-        $queryStatement = "SELECT * FROM Contacts ORDER BY Firstname;";
+        // Return empty JSON package since we can't select all contacts
+        returnEmptyPayload("");
+        http_response_code(200);
+        $connection->close();
+        exit();
     }
     $queryResult = $connection->query($queryStatement);
     

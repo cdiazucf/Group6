@@ -3,6 +3,7 @@ var registerFlag = false;
 var userId = 0;
 var contactsList;
 var curEditId;
+var curPage = 1;
 
 function login() 
 {
@@ -120,69 +121,124 @@ function saveCookie(firstName, lastName, userId)
 function showMyContacts()
 {
 	document.getElementById("searchField").value = "";
+	curPage = 1;
 	showContacts();
 }
 
 function showContacts()
 {
-	var jsonPayload = '{"userID" : ' + userId + ', "firstname" : "' + document.getElementById("searchField").value + '", "lastname" : "' + document.getElementById("searchField").value + '"}';
-	console.log(jsonPayload); //*********************debug**************
+	var jsonPayload = '{"ID" : "' + userId + '"}';
 	var xhr = new XMLHttpRequest();
-		
+	
 	try
 	{
-		xhr.onreadystatechange = function()
-		{
+		xhr.onreadystatechange = function(){
 			if(this.readyState == 4 && this.status == 200)
 			{
 				var jsonResponse = JSON.parse(xhr.responseText);
-				console.log(jsonResponse); //*********************debug**************
-				contactsList = jsonResponse.Contacts;
+				var totalPages = Math.ceil(jsonResponse.Count/10);
+				var pageList = "<ul class=\"pagination\">";
+				
+				if(curPage == 1)
+					pageList += "<li class=\"page-item disabled\"><a class=\"page-link\" href=\"\" tabindex=\"-1\" aria-disabled=\"true\">Previous</a></li>";
+				else
+					pageList += "<li class=\"page-item\"><a class=\"page-link\" href=\"Javascript: showPrev();\" tabindex=\"-1\">Previous</a></li>";
 
-				var contacts = "		<table class=\"table table-hover\">\n";
-				contacts += "			<thead>\n";
-				contacts += "				<tr>\n";
-				contacts += "					<th>Firstname</th>\n";
-				contacts += "					<th>Lastname</th>\n";
-				contacts += "					<th>Address</th>\n";
-				contacts += "					<th>Phone</th>\n";	
-				contacts += "					<th>Email</th>\n";
-				contacts += "					<th></th>\n";
-				contacts += "					<th></th>\n";
-				contacts += "				</tr>\n";
-				contacts += "			</thead>\n";
-				contacts += "			<tbody>\n";
-				
-				for(i = 0; i < jsonResponse.NumRows; i++)
+				for(i = 1; i <= totalPages; i++)
 				{
-					contacts += "				<tr>\n";
-					contacts += "					<td>" + contactsList[i][2] + "</td>\n";
-					contacts += "					<td>" + contactsList[i][3] + "</td>\n";
-					contacts += "					<td>" + contactsList[i][4] + "</td>\n";
-					contacts += "					<td>" + contactsList[i][6] + "</td>\n";
-					contacts += "					<td>" + contactsList[i][5] + "</td>\n";
-					contacts += "					<td><button onclick=\"showForm(" + i + ");\">edit</button></td>\n";
-					contacts += "					<td><button onclick=\"deleteContact(" + contactsList[i][0] + ");\">delete</button></td>\n";
-					contacts += "				</tr>\n";
+					if(i == curPage)
+						pageList += "    <li class=\"page-item active\" aria-current=\"page\"><a class=\"page-link\" href=\#\">" + i + "<span class=\"sr-only\">(current)</span></a></li>";
+					else
+						pageList += "<li class=\"page-item\"><a class=\"page-link\" href=\"#\">" + i + "</a></li>";
 				}
-				contacts += "			</tbody>\n";
-				contacts += "		</table>\n";
 				
-				document.getElementById("displayContacts").innerHTML = contacts;
+				if(curPage < totalPages)
+					pageList += "<li class=\"page-item\"><a class=\"page-link\" href=\"Javascript: showNext();\" tabindex=\"-1\">Next</a></li>";
+				else
+					pageList += "<li class=\"page-item disabled\"><a class=\"page-link\" href=\"\" tabindex=\"-1\" aria-disabled=\"true\">Next</a></li>";
 				
-				document.getElementById("searchBar").style.display = "block";
-				document.getElementById("addInputs").style.display = "none";
-			}
+				document.getElementById("pages").innerHTML = pageList + "</ul>";
+				
+				jsonPayload = '{"userID" : ' + userId + ', "firstname" : "' + document.getElementById("searchField").value + '", "lastname" : "' + document.getElementById("searchField").value + '", "Count" : ' + curPage + '}';
+				console.log(jsonPayload); //*********************debug**************
+					
+				try
+				{
+					xhr.onreadystatechange = function()
+					{
+						if(this.readyState == 4 && this.status == 200)
+						{
+							var jsonResponse = JSON.parse(xhr.responseText);
+							console.log(jsonResponse); //*********************debug**************
+							contactsList = jsonResponse.Contacts;
+
+							var contacts = "		<table class=\"table table-hover\">\n";
+							contacts += "			<thead>\n";
+							contacts += "				<tr>\n";
+							contacts += "					<th>Firstname</th>\n";
+							contacts += "					<th>Lastname</th>\n";
+							contacts += "					<th>Address</th>\n";
+							contacts += "					<th>Phone</th>\n";	
+							contacts += "					<th>Email</th>\n";
+							contacts += "					<th></th>\n";
+							contacts += "					<th></th>\n";
+							contacts += "				</tr>\n";
+							contacts += "			</thead>\n";
+							contacts += "			<tbody>\n";
+							
+							for(i = 0; i < jsonResponse.NumRows; i++)
+							{
+								contacts += "				<tr>\n";
+								contacts += "					<td>" + contactsList[i][2] + "</td>\n";
+								contacts += "					<td>" + contactsList[i][3] + "</td>\n";
+								contacts += "					<td>" + contactsList[i][4] + "</td>\n";
+								contacts += "					<td>" + contactsList[i][6] + "</td>\n";
+								contacts += "					<td>" + contactsList[i][5] + "</td>\n";
+								contacts += "					<td><button onclick=\"showForm(" + i + ");\">edit</button></td>\n";
+								contacts += "					<td><button onclick=\"deleteContact(" + contactsList[i][0] + ");\">delete</button></td>\n";
+								contacts += "				</tr>\n";
+							}
+							contacts += "			</tbody>\n";
+							contacts += "		</table>\n";
+							
+							document.getElementById("displayContacts").innerHTML = contacts;
+							
+							document.getElementById("searchBar").style.display = "block";
+							document.getElementById("addInputs").style.display = "none";
+						}
+					};
+				
+					xhr.open("POST", urlBase + "/api/searchContacts.php", true);
+					xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+					xhr.send(jsonPayload);
+				}
+				catch(err)
+				{
+					document.getElementById("status").innerHTML = "Error: " + err.message;
+				}
+			}			
 		};
 	
-		xhr.open("POST", urlBase + "/api/searchContacts.php", true);
+		xhr.open("POST", urlBase + "/api/getNumContacts.php", true);
 		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 		xhr.send(jsonPayload);
 	}
 	catch(err)
 	{
-		document.getElementById("status").innerHTML = "Error: " + err.message;
+		document.getElementById("loginStatus").innerHTML = "Error: " + err.message;
 	}
+}
+
+function showNext()
+{
+	curPage++;
+	showContacts();
+}
+
+function showPrev()
+{
+	curPage--;
+	showContacts();
 }
 
 function showForm(editId)

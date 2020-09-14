@@ -22,7 +22,7 @@
     $queryStatement = "INSERT INTO Contacts (UserID, Firstname, Lastname, Address, Email, Phone) " .
                       "VALUES ('" . $loginData["userID"] . "', '" . $loginData["firstname"] . "', '" .
                       $loginData["lastname"] . "', '" . $loginData["address"] . "', '" .
-                      $loginData["email"] . "', " . $loginData["phone"] . ");";
+                      $loginData["email"] . "', '" . $loginData["phone"] . "');";
     $query = $connection->query($queryStatement);
     
     // IF query failed

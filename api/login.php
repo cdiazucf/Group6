@@ -18,7 +18,7 @@
         exit($connection->connection_error);
     }
     
-    $queryStatement = "SELECT ID, Firstname, Lastname FROM Users where Username='" . $loginData["username"] . "' and Password= '" . $loginData["password"] . "';";
+    $queryStatement = "SELECT ID, Firstname, Lastname, DateCreated FROM Users where Username='" . $loginData["username"] . "' and Password= '" . $loginData["password"] . "';";
     $queryData = $connection->query($queryStatement);
     
     if ($queryData->num_rows < 1)
@@ -31,16 +31,18 @@
     
     $data = $queryData->fetch_assoc();
     
+    $currentDate = date('Y-m-d');
+    
     // Update dateLastLoggedIn field in database
-    $updateResult = $queryStatement = "UPDATE Users SET DateLastLoggedIn='" . date_format(date(), "Y-m-d") . "' WHERE ID=" . $data["ID"] . ";";
+    $updateResult = $queryStatement = "UPDATE Users SET DateLastLoggedIn='" . $currentDate . "' WHERE ID=" . $data["ID"] . ";";
     
     if ($updateResult == false)
     {
-        returnJsonPayload($data["ID"], $data["Username"], $data["Firstname"], $data["Lastname"], $data["DateCreated"], date_format(date(), "Y-m-d"), "Failed to update DateLastLoggedIn in database");
+        returnJsonPayload($data["ID"], $loginData["username"], $data["Firstname"], $data["Lastname"], $data["DateCreated"], $currentDate, "Failed to update DateLastLoggedIn in database");
     }
     else
     {
-        returnJsonPayload($data["ID"], $data["Username"], $data["Firstname"], $data["Lastname"], $data["DateCreated"], date_format(date(), "Y-m-d"), "");
+        returnJsonPayload($data["ID"], $loginData["username"], $data["Firstname"], $data["Lastname"], $data["DateCreated"], $currentDate, "");
     }
     
     $connection->close();

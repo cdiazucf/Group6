@@ -19,7 +19,7 @@
     }
 
     // Select contacts from page based on 
-    $queryStatement = "SELECT * FROM Contacts WHERE UserID=" . $loginData["userID"] . " AND (Firstname LIKE '%" . $loginData["criteria"] . "%' OR Lastname LIKE '%" . $loginData["criteria"] . "%') ORDER BY Firstname LIMIT " . ($loginData["pageNum"] * $numContactsPerPage) . ";";
+    $queryStatement = "SELECT * FROM Contacts WHERE UserID=" . $loginData["ID"] . " ORDER BY Firstname LIMIT " . ($loginData["pageNum"] * $numContactsPerPage) . ";";
     $queryResult = $connection->query($queryStatement);
 
     // IF the query failed

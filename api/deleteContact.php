@@ -45,7 +45,7 @@
     */
     function returnJsonPayload($success, $error)
     {
-        $payload = array("ID" => $success, "Error" => $error);
+        $payload = array("Success" => $success, "Error" => $error);
         echo json_encode($payload);
     }
     

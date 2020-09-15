@@ -33,6 +33,7 @@
     
     // Process the returned data
     $allContacts = $queryResult->fetch_all();
+    $totalContacts = $queryResult->num_rows;
     $selectedContacts = array();
     $numSelectedContacts = 0;
     
@@ -49,7 +50,7 @@
     }
     
     $connection->close();
-    returnJsonPayload($selectedContacts, $numSelectedContacts);
+    returnJsonPayload($selectedContacts, $totalContacts, $numSelectedContacts);
     http_response_code(200);
     exit();
 
@@ -59,9 +60,9 @@
     *   Packages the returned contacts, if any, into JSON package and returns
     *   them to front-end.
     */
-    function returnJsonPayload($contacts, $numRows)
+    function returnJsonPayload($contacts, $numRows, $totalContacts)
     {
-        $payload = array('NumRows' => $numRows, 'Contacts' => $contacts, 'Error' => '');
+        $payload = array('NumRows' => $numRows, 'TotalContacts' => $totalContacts, 'Contacts' => $contacts, 'Error' => '');
         echo json_encode($payload);
     }
     
@@ -72,7 +73,7 @@
     */
     function returnEmptyPayload($error)
     {
-        $payload = array('NumRows' => 0, 'Contacts' => array(), 'Error' => $error);
+        $payload = array('NumRows' => 0, 'TotalContacts'=> 0, 'Contacts' => array(), 'Error' => $error);
         echo json_encode($payload);
     }
 ?>

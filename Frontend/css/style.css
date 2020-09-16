@@ -1,12 +1,23 @@
 body
 {
-	background-color: #adad85;
+	background-color: #bbb;
 }
 
-h1, h3
+h1
 {
-	margin: 100px 10px 35px 10px;
 	text-align: center;
+	font-weight: bold;
+	font-size: 60px;
+	font-family: Old English Text MT;
+	background-color: rgba(204,174,142,.6);
+}
+
+p
+{
+	background-color: rgba(204,174,142,.6);
+	text-align: center;
+	font-weight: bold;	
+	font-size: 25px;
 }
 
 #loginForm
@@ -56,4 +67,22 @@ h1, h3
 	width: 75%;
 	margin: 0px auto 10px auto;
 	text-align: center;
+}
+
+.monty-python
+{
+	background: url("https://occ-0-1722-92.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABTk14Gug0poyJJmAkppVAWTv4PrFT5PcLpHmKB3BJMeE0ROgXpmLWaoAlXRUTVmHhy5DFVfCXfvL0xvyKxe_bjsboDRa.jpg?r=1c1") no-repeat fixed center -50px;
+	height: 250px;
+}
+
+.monty-pythonSearch
+{
+	background: url("https://occ-0-1722-92.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABTk14Gug0poyJJmAkppVAWTv4PrFT5PcLpHmKB3BJMeE0ROgXpmLWaoAlXRUTVmHhy5DFVfCXfvL0xvyKxe_bjsboDRa.jpg?r=1c1") no-repeat fixed center -50px;
+	height: 70px;
+}
+
+.monty-pythonPage
+{
+	background: url("https://occ-0-1722-92.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABTk14Gug0poyJJmAkppVAWTv4PrFT5PcLpHmKB3BJMeE0ROgXpmLWaoAlXRUTVmHhy5DFVfCXfvL0xvyKxe_bjsboDRa.jpg?r=1c1") no-repeat fixed center -50px;
+	min-height: 600px;
 }

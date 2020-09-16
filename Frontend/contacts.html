@@ -5,12 +5,12 @@
 	<!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+	
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
 	<link rel="stylesheet" href="css/style.css">
-	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>	
 	
 	<script type="text/javascript">
 	document.addEventListener('DOMContentLoaded', function() 
@@ -21,20 +21,33 @@
   </head>
   
   <body>
-	<div id="status"></div>
-	<div class="jumbotron jumbotron-fluid">
+	<span id="status" class="label label-success"></span>
+	<div class="container p-3 monty-python">
 		<h1>Contacts Page</h1>
-		<h3 id="greeting"></h3>
+		<p id="greeting"></p>
 		<div class="container-fluid">
 			<div class="d-flex justify-content-center">	
-				<button type="button" class="btn btn-primary btn-lg active" onclick="showMyContacts();">My Contacts</button>
-				<button type="button" class="btn btn-primary btn-lg active" onclick="showForm(-1);">Add Contact</button>
-				<button type="button" class="btn btn-primary btn-lg active" onclick="logout();">Logout</button>
+				<button type="button" class="btn btn-dark btn-lg active" onclick="showMyContacts();">My Contacts</button>
+				<button type="button" class="btn btn-dark btn-lg active" onclick="showForm(-1);">Add Contact</button>
+				<button type="button" class="btn btn-dark btn-lg active" onclick="logout();">Logout</button>
 			</div>
 		</div>
 	</div>
+	<div class="container-fluid my-3">
+		<div class="container-lg" id="searchBar">
+			<div class="input-group mb-3">
+				<input type="text" class="form-control" id="searchField" placeholder="Search" onkeyup="showContacts();">
+				<div class="input-group-append">
+					<!--<button class="btn btn-success" type="submit" onclick="showContacts();">Go</button>  -->
+				</div>
+			</div>
+		</div>
+		
+		<div class="container" id="displayContacts"></div>
+		<div id="pages"></div>
+	</div>
 	
-	<div id="addInputs">
+	<div class="container pt-5" id="addInputs">
 		<div class="inputfields">
 			<label for="fName">First Name: </label>
 			<input type="text" id="fName" class="" maxlength="50" placeholder="First Name"/>
@@ -71,30 +84,13 @@
 			<label for="email">Email: </label>
 			<input type="text" id="email" maxlength="50" placeholder="Email Address"/>
 		</div>
-		<div id="addBtn">
-			<button type="button" class="btn btn-secondary" onclick="add();">Add &raquo;</button>
-		</div>
-		<div id="editBtn">
-			<button type="button" class="btn btn-secondary" onclick="edit();">Edit &raquo;</button>
-		</div>
-		<div id="cancelBtn">
-			<button type="button" class="btn btn-secondary" onclick="showContacts();">Cancel</button>
+		<div>
+			<button type="button" id="addBtn" class="btn btn-secondary" onclick="add();">Add &raquo;</button>
+			<button type="button" id="editBtn" class="btn btn-secondary" onclick="edit();">Edit &raquo;</button>
+			<button type="button" id="cancelBtn" class="btn btn-secondary" onclick="showContacts();">Cancel</button>
 		</div>
 	</div>
 		
-	<div class="container-lg" id="searchBar">
-		<div class="input-group mb-3">
-			<input type="text" class="form-control" id="searchField" placeholder="Search">
-			<div class="input-group-append">
-				<button class="btn btn-success" type="submit" onclick="showContacts();">Go</button>  
-			</div>
-		</div>
-	</div>
-	
-	<div class="container" id="displayContacts"></div>
-	
-	<div id="pages"></div>
-
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

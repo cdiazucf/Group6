@@ -21,7 +21,6 @@
   </head>
   
   <body>
-	<span id="status" class="label label-success"></span>
 	<div class="container p-3 monty-python">
 		<h1>Contacts Page</h1>
 		<p id="greeting"></p>
@@ -37,24 +36,25 @@
 		<div class="container-lg" id="searchBar">
 			<div class="input-group mb-3">
 				<input type="text" class="form-control" id="searchField" placeholder="Search" onkeyup="showContacts();">
-				<div class="input-group-append">
-					<!--<button class="btn btn-success" type="submit" onclick="showContacts();">Go</button>  -->
-				</div>
 			</div>
+			<div id="successShowContacts" class="alert alert-success"></div>
+			<div id="errorShowContacts" class="alert alert-danger"></div>
 		</div>
 		
 		<div class="container" id="displayContacts"></div>
 		<div id="pages"></div>
 	</div>
-	
 	<div class="container pt-5" id="addInputs">
-		<div class="inputfields">
-			<label for="fName">First Name: </label>
-			<input type="text" id="fName" class="" maxlength="50" placeholder="First Name"/>
-		</div>
-		<div class="inputfields">
-			<label for="lName">Last Name: </label>
-			<input type="text" id="lName" maxlength="50" placeholder="Last Name"/>	
+		<div id="errorAdd" class="alert alert-danger"></div>
+		<div class="row">
+			<div class="col-md-3 inputfields">
+				<label for="fName">First Name: </label>
+				<input type="text" id="fName" class="" maxlength="50" placeholder="First Name"/>
+			</div>
+			<div class="col-md-3 inputfields">
+				<label for="lName">Last Name: </label>
+				<input type="text" id="lName" maxlength="50" placeholder="Last Name"/>	
+			</div>
 		</div>
 		<div class="inputfields">
 			<label for="address1">Address 1: </label>
@@ -70,24 +70,33 @@
 		</div>
 		<div class="inputfields">
 			<label for="state">State: </label>
-			<input type="text" id="state" maxlength="2" placeholder="State"/>
-		</div>
-		<div class="inputfields">
+			<input type="text" id="state" maxlength="2" size="2" placeholder="State"/>
 			<label for="zip">Zip: </label>
-			<input type="text" id="zip" maxlength="5" placeholder="Zip Code"/>
+			<input type="text" id="zip" maxlength="5" size="5" placeholder="Zip Code"/>
 		</div>
 		<div class="inputfields">
 			<label for="phone">Phone number: </label>
-			<input type="text" id="phone" maxlength="12" placeholder="Phone Number"/>
+			<input type="tel" id="phone" maxlength="12" size="12" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"/>
 		</div>
 		<div class="inputfields">
 			<label for="email">Email: </label>
 			<input type="text" id="email" maxlength="50" placeholder="Email Address"/>
 		</div>
 		<div>
-			<button type="button" id="addBtn" class="btn btn-secondary" onclick="add();">Add &raquo;</button>
-			<button type="button" id="editBtn" class="btn btn-secondary" onclick="edit();">Edit &raquo;</button>
-			<button type="button" id="cancelBtn" class="btn btn-secondary" onclick="showContacts();">Cancel</button>
+			<ul class="pagination justify-content-end">
+				<div id="addBtn">
+					<li class="page-item"><a class="page-link myColor" href="Javascript: add();" tabindex="-1">Add &raquo</a></li>
+				</div>
+				<div  id="editBtn">
+					<li class="page-item"><a class="page-link myColor" href="Javascript: updateContact();" tabindex="-1">Update &raquo</a></li>
+				</div>
+				<div id="cancelBtn">
+					<li class="page-item"><a class="page-link myColor" href="Javascript: showContacts();" tabindex="-1">Cancel &raquo</a></li>
+				</div>
+			</ul>
+			<!-- <button type="button" id="addBtn" class="btn btn-secondary" onclick="add();">Add &raquo;</button>
+			<button type="button" id="editBtn" class="btn btn-secondary" onclick="updateContact();">Update &raquo;</button>
+			<button type="button" id="cancelBtn" class="btn btn-secondary" onclick="showContacts();">Cancel</button> -->
 		</div>
 	</div>
 		

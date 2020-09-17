@@ -34,11 +34,12 @@ p
 
 .inputfields
 {
-	margin: 10px 200px;
+	margin: 10px 20%;
 }
 
 #addInputs
 {
+	margin: 0 20%;
 	display: none;
 }
 
@@ -85,4 +86,17 @@ p
 {
 	background: url("https://occ-0-1722-92.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABTk14Gug0poyJJmAkppVAWTv4PrFT5PcLpHmKB3BJMeE0ROgXpmLWaoAlXRUTVmHhy5DFVfCXfvL0xvyKxe_bjsboDRa.jpg?r=1c1") no-repeat fixed center -50px;
 	min-height: 600px;
+}
+
+.mypage-link
+{
+	background-color: #404040 !important;
+	border-color: #404040 !important;	
+}
+
+.myColor
+{
+	background-color: #404040 !important;
+	color: #e9ecef !important;
+	
 }

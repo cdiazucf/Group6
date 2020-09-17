@@ -29,7 +29,7 @@ function login()
 					
 					if(userId < 1)
 					{
-						document.getElementById("loginStatus").innerHTML = "Error: User not Found";
+						document.getElementById("loginStatus").innerHTML = "None Shall Pass! : Invalid Login";
 						return;
 					}
 					
@@ -48,13 +48,19 @@ function login()
 		}
 		catch(err)
 		{
-			document.getElementById("loginStatus").innerHTML = "Error: " + err.message;
+			document.getElementById("loginStatus").innerHTML = "She turned me into a newt!: " + err.message;
 		}
 	}
 	else
 	{
 		firstName = document.getElementById("fName").value;
 		lastName = document.getElementById("lName").value;
+		if((firstName == "") || (lastName == "") || (username == "") || (password == ""))
+		{
+			document.getElementById("loginStatus").innerHTML = "Those fields are empty! You're just banging them together!";
+			return;
+		}
+		
 		var jsonPayload = '{"firstname" : "' + firstName + '", "lastname" : "' + lastName + '", "username" : "' + username + '", "password" : "' + hash + '"}';
 		var xhr = new XMLHttpRequest();
 		
@@ -68,11 +74,11 @@ function login()
 					
 					if(jsonResponse.Error != "")
 					{
-						document.getElementById("loginStatus").innerHTML = "Error: " + jsonResponse.Error;
+						document.getElementById("loginStatus").innerHTML = "Are you suggesting coconuts migrate?!: " + jsonResponse.Error;
 						return;
 					}
 					register();
-					document.getElementById("loginStatus").innerHTML = "Registration Successful!";
+					document.getElementById("loginStatus").innerHTML = "I'm not dead! I feel happy! Registration Successful!";
 				}
 			};
 		
@@ -82,7 +88,7 @@ function login()
 		}
 		catch(err)
 		{
-			document.getElementById("loginStatus").innerHTML = "Error: " + err.message;
+			document.getElementById("loginStatus").innerHTML = "She turned me into a newt!: " + err.message;
 		}
 	}	
 }
@@ -127,7 +133,7 @@ function saveCookie(firstName, lastName, userId)
 function showMyContacts()
 {
 	document.getElementById("searchField").value = "";
-	document.getElementById("status").innerHTML = "";
+	resetStatus();
 	curPage = 1;
 	showContacts();
 }
@@ -169,7 +175,7 @@ function showContacts()
 				for(i = 1; i <= totalPages; i++)
 				{
 					if(i == curPage)
-						pageList += "    <li class=\"page-item active\" aria-current=\"page\"><a class=\"page-link\" href=\#\">" + i + "<span class=\"sr-only\">(current)</span></a></li>";
+						pageList += "    <li class=\"page-item active\" aria-current=\"page\"><a class=\"page-link mypage-link\" href=\#\">" + i + "<span class=\"sr-only\">(current)</span></a></li>";
 					else
 						pageList += "<li class=\"page-item\"><a class=\"page-link\" href=\"#\">" + i + "</a></li>";
 				}
@@ -224,7 +230,9 @@ function showContacts()
 	}
 	catch(err)
 	{
-		document.getElementById("status").innerHTML = "Error: " + err.message;
+		document.getElementById("errorShowContacts").innerHTML = "She turned me into a newt!: " + err.message;
+		document.getElementById("errorShowContacts").style.display = "block";
+		setTimeout(function(){document.getElementById("errorShowContacts").style.display = "none";}, 3000);
 	}
 }
 
@@ -242,9 +250,10 @@ function showPrev()
 
 function showForm(editId)
 {
+	document.getElementById("pages").innerHTML = "";
 	if(editId == -1)
 	{
-		document.getElementById("pages").innerHTML = "";
+		
 		document.getElementById("editBtn").style.display = "none";
 		document.getElementById("addBtn").style.display = "block";
 		document.getElementById("fName").value = "";
@@ -304,6 +313,14 @@ function add()
 	contact.phone = document.getElementById("phone").value;
 	contact.email = document.getElementById("email").value;
 	
+		if(contact.firstname == "")
+	{
+		document.getElementById("errorAdd").innerHTML = "Those fields are empty! You're just banging them together!";
+		document.getElementById("errorAdd").style.display = "block";
+		setTimeout(function(){document.getElementById("errorAdd").style.display = "none";}, 3000);
+		return;
+	}
+	
 	var jsonPayload = JSON.stringify(contact);
 	var xhr = new XMLHttpRequest();
 		
@@ -315,7 +332,9 @@ function add()
 			{
 				var jsonResponse = JSON.parse(xhr.responseText);
 				console.log(jsonResponse); //************************debug*************
-				document.getElementById("status").innerHTML = "Contact Added Successful!";
+				document.getElementById("successShowContacts").innerHTML = "Who are you who are so wise in the ways of science? Contact Added";
+				document.getElementById("successShowContacts").style.display = "block";
+				setTimeout(function(){document.getElementById("successShowContacts").style.display = "none";}, 3000);
 				showContacts();
 			}
 		};
@@ -326,13 +345,26 @@ function add()
 	}
 	catch(err)
 	{
-		document.getElementById("status").innerHTML = "Error: " + err.message;
+		document.getElementById("errorAdd").innerHTML = "She turned me into a newt!: " + err.message;
+		document.getElementById("errorAdd").style.display = "block";
+		setTimeout(function(){document.getElementById("errorAdd").style.display = "none";}, 3000);
 	}
 }
 
-function editContact()
+function updateContact()
 {
-	var jsonPayload = '{"ID" : "' + curEditId + '"}';
+	var contact = {};
+	contact.ID = curEditId;
+	contact.firstname = document.getElementById("fName").value;
+	contact.lastname = document.getElementById("lName").value;
+	contact.address = document.getElementById("address1").value;
+	if (document.getElementById("address2").value != "")
+		contact.address += ", " + document.getElementById("address2").value;
+	contact.address += ", " + document.getElementById("city").value + ", " + document.getElementById("state").value + " " + document.getElementById("zip").value;
+	contact.phone = document.getElementById("phone").value;
+	contact.email = document.getElementById("email").value;
+	
+	var jsonPayload = JSON.stringify(contact);
 	var xhr = new XMLHttpRequest();
 	
 	try
@@ -341,25 +373,29 @@ function editContact()
 			if(this.readyState == 4 && this.status == 200)
 			{
 				var jsonResponse = JSON.parse(xhr.responseText);
-				document.getElementById("status").innerHTML = "Contact Deleted Successfully my Lord!";
+				document.getElementById("successShowContacts").innerHTML = "It's Just a Flesh Wound! Contact Updated";
+				document.getElementById("successShowContacts").style.display = "block";
+				setTimeout(function(){document.getElementById("successShowContacts").style.display = "none";}, 3000);
 				showContacts();
 			}
 			
 		};
 	
-		xhr.open("POST", urlBase + "/api/deleteContact.php", true);
+		xhr.open("POST", urlBase + "/api/updateContact.php", true);
 		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 		xhr.send(jsonPayload);
 	}
 	catch(err)
 	{
-		document.getElementById("loginStatus").innerHTML = "Error: " + err.message;
+		document.getElementById("errorAdd").innerHTML = "She turned me into a newt!: " + err.message;
+		document.getElementById("errorAdd").style.display = "block";
+		setTimeout(function(){document.getElementById("errorAdd").style.display = "none";}, 3000);
 	}
 }
 
 function deleteContact(id)
 {
-	if(confirm("Delete my Lord?"))
+	if(confirm("Does it weigh as much as a duck?: Delete"))
 	{
 		var jsonPayload = '{"ID" : "' + id + '"}';
 		var xhr = new XMLHttpRequest();
@@ -370,7 +406,9 @@ function deleteContact(id)
 				if(this.readyState == 4 && this.status == 200)
 				{
 					var jsonResponse = JSON.parse(xhr.responseText);
-					document.getElementById("status").innerHTML = "Contact Deleted Successfully my Lord!";
+					document.getElementById("successShowContacts").innerHTML = "It's Made of Wood! Contact Deleted";
+					document.getElementById("successShowContacts").style.display = "block";
+					setTimeout(function(){document.getElementById("successShowContacts").style.display = "none";}, 3000);
 					showContacts();
 				}
 				
@@ -382,9 +420,18 @@ function deleteContact(id)
 		}
 		catch(err)
 		{
-			document.getElementById("loginStatus").innerHTML = "Error: " + err.message;
+			document.getElementById("errorAdd").innerHTML = "She turned me into a newt!: " + err.message;
+			document.getElementById("errorAdd").style.display = "block";
+			setTimeout(function(){document.getElementById("errorAdd").style.display = "none";}, 3000);
 		}
 	}
+}
+
+function resetStatus()
+{
+	document.getElementById("errorShowContacts").style.display = "none";
+	document.getElementById("errorAdd").style.display = "none";
+	document.getElementById("successShowContacts").style.display = "none";
 }
 
 function readCookie()

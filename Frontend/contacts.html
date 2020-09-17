@@ -32,7 +32,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="container-fluid my-3">
+	<div class="container-fluid my-4">
 		<div class="container-lg" id="searchBar">
 			<div class="input-group mb-3">
 				<input type="text" class="form-control" id="searchField" placeholder="Search" onkeyup="showContacts();">
@@ -44,9 +44,10 @@
 		<div class="container" id="displayContacts"></div>
 		<div id="pages"></div>
 	</div>
-	<div class="container-sm pt-5" id="addInputs">
+	<div class="container-sm pt-4" id="addInputs">
+		<h2 id="addupdateTitle">Add Contact</h2>
 		<div id="errorAdd" class="alert alert-danger"></div>
-		<form>
+		<form class="pt-2">
 			<div class="row justify-content-center">
 				<div class="form-group col-md-5">
 					<label for="fName">First Name: </label>
@@ -72,11 +73,11 @@
 					<label for="city">City: </label>
 					<input type="text" id="city" class="form-control" maxlength="20" placeholder="City"/>
 				</div>
-				<div class="form-group col-md-3">
+				<div class="form-group col-md-2">
 					<label for="state">State: </label>
 					<input type="text" id="state" class="form-control" maxlength="2" size="2" placeholder="State"/>
 				</div>
-				<div class="form-group col-md-2">
+				<div class="form-group col-md-3">
 					<label for="zip">Zip: </label>
 					<input type="text" id="zip" class="form-control" maxlength="5" size="5" placeholder="Zip Code"/>
 				</div>
@@ -95,7 +96,7 @@
 		<div>
 			<ul class="pagination justify-content-center pt-4 pb-5">
 				<div id="cancelBtn" class="pl-5 pr-5">
-					<li class="page-item"><a class="page-link myColor pl-3 pr-3" href="Javascript: showContacts();" tabindex="-1">Cancel &raquo</a></li>
+					<li class="page-item"><a class="page-link myColor pl-3 pr-3" href="Javascript: showContacts();" tabindex="-1">&laquo Cancel</a></li>
 				</div>
 				<div id="addBtn" class="pl-5 pr-5">
 					<li class="page-item"><a class="page-link myColor pl-3 pr-3" href="Javascript: add();" tabindex="-1">Add &raquo</a></li>

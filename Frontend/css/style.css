@@ -12,6 +12,13 @@ h1
 	background-color: rgba(204,174,142,.6);
 }
 
+h2
+{
+	font-size: 40px;
+	text-align: center;
+	font-family: Old English Text MT;
+}
+
 p
 {
 	background-color: rgba(204,174,142,.6);
@@ -91,10 +98,15 @@ p
 	min-height: 600px;
 }
 
-.mypage-link
+.mypage-link-current
 {
 	background-color: #404040 !important;
 	border-color: #404040 !important;	
+}
+
+.mypage-link
+{
+	color: #000!important;
 }
 
 .myColor

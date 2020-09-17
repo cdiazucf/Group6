@@ -170,18 +170,18 @@ function showContacts()
 				if(curPage == 1)
 					pageList += "<li class=\"page-item disabled\"><a class=\"page-link\" href=\"\" tabindex=\"-1\" aria-disabled=\"true\">Previous</a></li>";
 				else
-					pageList += "<li class=\"page-item\"><a class=\"page-link\" href=\"Javascript: showPrev();\" tabindex=\"-1\">Previous</a></li>";
+					pageList += "<li class=\"page-item\"><a class=\"page-link mypage-link\" href=\"Javascript: showPrev();\" tabindex=\"-1\">Previous</a></li>";
 
 				for(i = 1; i <= totalPages; i++)
 				{
 					if(i == curPage)
-						pageList += "    <li class=\"page-item active\" aria-current=\"page\"><a class=\"page-link mypage-link\" href=\#\">" + i + "<span class=\"sr-only\">(current)</span></a></li>";
+						pageList += "    <li class=\"page-item active\" aria-current=\"page\"><a class=\"page-link mypage-link-current\" href=\#\">" + i + "<span class=\"sr-only\">(current)</span></a></li>";
 					else
-						pageList += "<li class=\"page-item\"><a class=\"page-link\" href=\"#\">" + i + "</a></li>";
+						pageList += "<li class=\"page-item\"><a class=\"page-link mypage-link\" href=\"Javascript: showcurPage(" + i + ");\">" + i + "</a></li>";
 				}
 				
 				if(curPage < totalPages)
-					pageList += "<li class=\"page-item\"><a class=\"page-link\" href=\"Javascript: showNext();\" tabindex=\"-1\">Next</a></li>";
+					pageList += "<li class=\"page-item\"><a class=\"page-link mypage-link\" href=\"Javascript: showNext();\" tabindex=\"-1\">Next</a></li>";
 				else
 					pageList += "<li class=\"page-item disabled\"><a class=\"page-link\" href=\"\" tabindex=\"-1\" aria-disabled=\"true\">Next</a></li>";
 				
@@ -242,6 +242,12 @@ function showNext()
 	showContacts();
 }
 
+function showcurPage(pageNum)
+{
+	curPage = pageNum;
+	showContacts();
+}
+
 function showPrev()
 {
 	curPage--;
@@ -253,7 +259,7 @@ function showForm(editId)
 	document.getElementById("pages").innerHTML = "";
 	if(editId == -1)
 	{
-		
+		document.getElementById("addupdateTitle").innerHTML = "Add Contact";
 		document.getElementById("editBtn").style.display = "none";
 		document.getElementById("addBtn").style.display = "block";
 		document.getElementById("fName").value = "";
@@ -271,6 +277,7 @@ function showForm(editId)
 		var addressArray = contactsList[editId][4].split(", ");
 		curEditId = contactsList[editId][0];
 		
+		document.getElementById("addupdateTitle").innerHTML = "Update Contact";
 		document.getElementById("addBtn").style.display = "none";
 		document.getElementById("editBtn").style.display = "block";
 		document.getElementById("fName").value = contactsList[editId][2];

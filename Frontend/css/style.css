@@ -32,15 +32,18 @@ p
 	display: none;
 }
 
-.inputfields
-{
-	margin: 10px 20%;
-}
-
 #addInputs
 {
-	margin: 0 20%;
+	border: solid 1px #000;
+	width: 40%;
+	margin: 20px auto 0 auto;
 	display: none;
+}
+
+#addInputs .row
+{
+	margin-left: 0 !important;
+	margin-right: 0 !important;
 }
 
 #pages

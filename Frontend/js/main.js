@@ -378,7 +378,6 @@ function updateContact()
 				setTimeout(function(){document.getElementById("successShowContacts").style.display = "none";}, 3000);
 				showContacts();
 			}
-			
 		};
 	
 		xhr.open("POST", urlBase + "/api/updateContact.php", true);
@@ -436,6 +435,7 @@ function resetStatus()
 
 function readCookie()
 {
+	resetStatus();
 	userId = -1;
 	var data = document.cookie;
 	var splits = data.split(",");

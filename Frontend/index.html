@@ -13,29 +13,38 @@
 	<script type="text/javascript" src="js/main.js"></script>
 	<script type="text/javascript" src="js/md5.js"></script>
    
-  </head>
-  <body>
-	<div id="loginStatus"></div>
-	<div id="loginForm" class="container-md">
+</head>
+<body id="login">
+	<div id="loginForm" class="container-lg">
 		<h1>Contacts of the Round Table</h1>
-		<form onsubmit="login(); return false;">
+		<form class="pt-3" onsubmit="login(); return false;">
 			<div id="nameFields">
-				<div class="inputfields">
-					<label for="fName">First Name: </label>
-					<input type="text" id="fName" maxlength="50" placeholder="First Name"/>
+				<div class="row justify-content-center">
+					<div class="form-group col-md-5">
+						<label for="fName">First Name: </label>
+						<input type="text" id="fName" maxlength="50" placeholder="First Name"/>
+					</div>	
 				</div>
-				<div class="inputfields">
-					<label for="lName">Last Name: </label>
-					<input type="text" id="lName" maxlength="50" placeholder="Last Name"/>	
+				<div class="row justify-content-center">
+					<div class="form-group col-md-5">	
+						<label for="lName">Last Name: </label>
+						<input type="text" id="lName" maxlength="50" placeholder="Last Name"/>
+					</div>	
 				</div>
 			</div>
-			<div class="inputfields">
-				<label for="username">Username: </label>
-				<input type="text" id="username" maxlength="50" placeholder="Username" autofocus/>
+			<div class="row justify-content-center">
+				<div class="form-group col-md-5">
+					<label for="username">Username: </label>
+					<input type="text" id="username" maxlength="50" placeholder="Username" autofocus/>
+				</div>
 			</div>
-			<div class="inputfields">
-				<label for="password">Password: </label>
-				<input type="password" id="password" maxlength="50" placeholder="Password"/>
+			<div class="row justify-content-center">
+				<div class="form-group col-md-5">
+					<label for="password">Password: </label>
+					<input type="password" id="password" maxlength="50" placeholder="Password"/>
+					<div id="invalidStatus" class="invalid-feedback status"></div>
+					<div id="validStatus" class="valid-feedback status"></div>
+				</div>
 			</div>
 			<div id="loginButtondiv">
 				<button type="submit" id="loginButton" class="btn btn-secondary">Login</button>
@@ -45,9 +54,6 @@
 			Don't have an account? Register <a href="javascript:register();">here</a>!
 		</div>
 	</div>
-	
-
-	
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

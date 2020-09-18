@@ -12,7 +12,9 @@ function login()
 	var firstName = "";
 	var lastName = "";
 	var hash = md5(password);
-	document.getElementById("loginStatus").innerHTML = "";
+	document.getElementById("validStatus").style.display = "none";
+	document.getElementById("invalidStatus").style.display = "none";
+	
 		
 	if(!registerFlag)
 	{
@@ -29,7 +31,8 @@ function login()
 					
 					if(userId < 1)
 					{
-						document.getElementById("loginStatus").innerHTML = "None Shall Pass! : Invalid Login";
+						document.getElementById("invalidStatus").innerHTML = "None Shall Pass! : Invalid Login";
+						document.getElementById("invalidStatus").style.display = "block";
 						return;
 					}
 					
@@ -48,7 +51,8 @@ function login()
 		}
 		catch(err)
 		{
-			document.getElementById("loginStatus").innerHTML = "She turned me into a newt!: " + err.message;
+			document.getElementById("invalidStatus").innerHTML = "She turned me into a newt!: " + err.message;
+			document.getElementById("invalidStatus").style.display = "block";
 		}
 	}
 	else
@@ -57,7 +61,8 @@ function login()
 		lastName = document.getElementById("lName").value;
 		if((firstName == "") || (lastName == "") || (username == "") || (password == ""))
 		{
-			document.getElementById("loginStatus").innerHTML = "Those fields are empty! You're just banging them together!";
+			document.getElementById("invalidStatus").innerHTML = "Those fields are empty! You're just banging them together!";
+			document.getElementById("invalidStatus").style.display = "block";
 			return;
 		}
 		
@@ -74,11 +79,14 @@ function login()
 					
 					if(jsonResponse.Error != "")
 					{
-						document.getElementById("loginStatus").innerHTML = "Are you suggesting coconuts migrate?!: " + jsonResponse.Error;
+						document.getElementById("invalidStatus").innerHTML = "Are you suggesting coconuts migrate?!: " + jsonResponse.Error;
+						document.getElementById("invalidStatus").style.display = "block";
 						return;
 					}
 					register();
-					document.getElementById("loginStatus").innerHTML = "I'm not dead! I feel happy! Registration Successful!";
+					document.getElementById("validStatus").innerHTML = "I'm not dead! I feel happy! Registration Successful!";
+					document.getElementById("validStatus").style.display = "block";
+					setTimeout(function(){document.getElementById("validStatus").style.display = "none";}, 10000);
 				}
 			};
 		
@@ -88,13 +96,16 @@ function login()
 		}
 		catch(err)
 		{
-			document.getElementById("loginStatus").innerHTML = "She turned me into a newt!: " + err.message;
+			document.getElementById("invalidStatus").innerHTML = "She turned me into a newt!: " + err.message;
+			document.getElementById("invalidStatus").style.display = "block";
 		}
 	}	
 }
 
 function register()
 {
+	document.getElementById("validStatus").style.display = "none";
+	document.getElementById("invalidStatus").style.display = "none";
 	document.getElementById("username").value = "";
 	document.getElementById("password").value = "";
 	document.getElementById("fName").value = "";

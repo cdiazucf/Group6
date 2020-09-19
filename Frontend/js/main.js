@@ -24,24 +24,32 @@ function login()
 		try
 		{
 			xhr.onreadystatechange = function(){
-				if(this.readyState == 4 && this.status == 200)
+				try
 				{
-					var jsonResponse = JSON.parse(xhr.responseText);
-					userId = jsonResponse.ID;
-					
-					if(userId < 1)
+					if(this.readyState == 4)
 					{
-						document.getElementById("invalidStatus").innerHTML = "None Shall Pass! : Invalid Login";
-						document.getElementById("invalidStatus").style.display = "block";
-						return;
+						var jsonResponse = JSON.parse(xhr.responseText);
+						userId = jsonResponse.ID;
+						
+						if(userId < 1)
+						{
+							document.getElementById("invalidStatus").innerHTML = "None Shall Pass! : Invalid Login";
+							document.getElementById("invalidStatus").style.display = "block";
+							return;
+						}
+						
+						firstName = jsonResponse.Firstname;
+						lastName = jsonResponse.Lastname;
+						
+						saveCookie(firstName, lastName, userId);
+						
+						window.location.href = "contacts.html";
 					}
-					
-					firstName = jsonResponse.Firstname;
-					lastName = jsonResponse.Lastname;
-					
-					saveCookie(firstName, lastName, userId);
-					
-					window.location.href = "contacts.html";
+				}
+				catch(err)
+				{
+					document.getElementById("invalidStatus").innerHTML = "She turned me into a newt!: An Error has Occurred" ;
+					document.getElementById("invalidStatus").style.display = "block";
 				}
 			};
 		
@@ -73,9 +81,10 @@ function login()
 		{
 			xhr.onreadystatechange = function()
 			{
-				if(this.readyState == 4 && this.status == 200)
+				if(this.readyState == 4)
 				{
 					var jsonResponse = JSON.parse(xhr.responseText);
+					console.log(jsonResponse); //*********************debug**************
 					
 					if(jsonResponse.Error != "")
 					{

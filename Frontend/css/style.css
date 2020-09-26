@@ -1,12 +1,29 @@
 body
 {
-	background-color: #bbb;
+	height: 100%;
+}
+
+html
+{
+	height: 100%;
 }
 
 #login
 {
 	background: #bbb url("../images/background.jpg") no-repeat center fixed;
 	background-size: cover;
+}
+
+#contact
+{
+	background: #bbb url("../images/contactsbackground2.jpg") no-repeat center fixed;
+	filter: blur(8px);
+	-webkit-filter: blur(8px);
+	background-size: cover;
+	height: 100%;
+	position: fixed;
+	z-index: -1;
+	width: 100%;
 }
 
 #loginForm
@@ -65,6 +82,28 @@ p
 	border-radius: 15px;
 }
 
+.actionBtn
+{
+	background: none;
+	border: none;
+}
+
+.editIcon
+{
+	color: #41d02c;
+	height: 30px;
+	width: 30px;
+}
+
+.deleteIcon
+{
+	color: #f00;
+	height: 30px;
+	width: 30px;
+	border: solid 3px #f00; 
+	margin-top: 3px;
+}
+
 #nameFields
 {
 	display: none;
@@ -76,6 +115,8 @@ p
 	width: 40%;
 	margin: 20px auto 0 auto;
 	display: none;
+	background-color: rgba(0,0,0, 0.4);
+	color: #fff;
 }
 
 #addInputs .row

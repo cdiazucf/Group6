@@ -1,19 +1,113 @@
 body
 {
-	background-color: #adad85;
+	height: 100%;
 }
 
-h1, h3
+html
 {
-	margin: 100px 10px 35px 10px;
-	text-align: center;
+	height: 100%;
+}
+
+#login
+{
+	background: #bbb url("../images/background.jpg") no-repeat center fixed;
+	background-size: cover;
+}
+
+#contact
+{
+	background: #bbb url("../images/contactsbackground2.jpg") no-repeat center fixed;
+	filter: blur(8px);
+	-webkit-filter: blur(8px);
+	background-size: cover;
+	height: 100%;
+	position: fixed;
+	z-index: -1;
+	width: 100%;
 }
 
 #loginForm
 {
-	width: 600px;
-	margin: 20px auto;
+	width: 40%;
+	margin: 10% auto;
 	border: solid 1px #000;
+	border-radius: 25px;
+	min-width: 350px;
+	background-color: rgba(0,0,0,0.7);
+}
+
+#loginForm h1
+{
+	font-family: Old English Text MT;
+	text-align: center;
+	font-weight: bold;
+	font-size: 60px;
+	color: #ffc414;
+
+}
+
+#loginForm label
+{
+	color: #fff;
+}
+
+#contactsPage h1
+{
+	text-align: center;
+	font-weight: bold;
+	font-size: 60px;
+	font-family: Old English Text MT;
+	background-color: rgba(204,174,142,.6);
+	width: 100%;
+	margin: auto;
+	max-width: 1280px;
+}
+
+h2
+{
+	font-size: 40px;
+	text-align: center;
+	font-family: Old English Text MT;
+}
+
+p
+{
+	background-color: rgba(204,174,142,.6);
+	text-align: center;
+	font-weight: bold;	
+	font-size: 25px;
+	width: 100%;
+	margin: auto;
+	max-width: 1280px;
+}
+
+.actionHeader
+{
+	text-align: center;
+}
+
+.actionBtn
+{
+	background: none;
+	border: none;
+	padding: 0;
+}
+
+.editIcon
+{
+	color: #41d02c;
+	height: 30px;
+	width: 30px;
+	margin-right: 20px;
+}
+
+.deleteIcon
+{
+	color: #f00;
+	height: 30px;
+	width: 30px;
+	border: solid 3px #f00; 
+	margin-top: 3px;
 }
 
 #nameFields
@@ -21,14 +115,20 @@ h1, h3
 	display: none;
 }
 
-.inputfields
-{
-	margin: 10px 200px;
-}
-
 #addInputs
 {
+	border: solid 1px #000;
+	width: 80%;
+	margin: 20px auto 0 auto;
 	display: none;
+	background-color: rgba(0,0,0, 0.4);
+	color: #fff;
+}
+
+#addInputs .row
+{
+	margin-left: 0 !important;
+	margin-right: 0 !important;
 }
 
 #pages
@@ -36,13 +136,33 @@ h1, h3
 	display: inline;
 }
 
+#displayContacts, #successShowContacts, #errorShowContacts
+{
+    max-width: 1280px;
+    margin: auto;
+}
+
+#successShowContacts, #errorShowContacts
+{
+	margin-bottom: 10px;
+}
+
 #loginButton
 {
 	margin: 10px auto;
-	border: solid 3px #000;
+	border: solid 3px #a6620a;
 	border-radius: 10px;
 	width: 125px;
 	padding: 3px;
+	color: #a6620a;
+	font-weight: bold;
+	background-color: #000;
+}
+
+#loginButton:hover
+{
+	color: #000;
+	background-color: #caa71f;
 }
 
 #loginButtondiv
@@ -54,6 +174,47 @@ h1, h3
 #registerLink
 {
 	width: 75%;
-	margin: 0px auto 10px auto;
+	margin: 0 auto 10px auto;
 	text-align: center;
+	color: #ffc414;
+}
+
+#registerLink a
+{
+	color: #c66612;
+}
+
+#registerLink a:hover
+{
+	color: #c4812b;
+}
+
+.monty-python
+{
+	background: url("../images/contactsBanner.jpg") no-repeat fixed center -50px;
+	height: 250px;
+	max-height: 250px;
+}
+
+.mypage-link-current
+{
+	background-color: #404040 !important;
+	border-color: #404040 !important;	
+}
+
+.mypage-link
+{
+	color: #000!important;
+}
+
+.myColor
+{
+	background-color: #404040 !important;
+	color: #e9ecef !important;
+	
+}
+
+.status
+{
+	display: none;
 }

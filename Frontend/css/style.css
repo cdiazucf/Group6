@@ -81,6 +81,11 @@ p
 	max-width: 1280px;
 }
 
+.actionHeader
+{
+	text-align: center;
+}
+
 .actionBtn
 {
 	background: none;
@@ -131,10 +136,15 @@ p
 	display: inline;
 }
 
-#displayContacts
+#displayContacts, #successShowContacts, #errorShowContacts
 {
     max-width: 1280px;
     margin: auto;
+}
+
+#successShowContacts, #errorShowContacts
+{
+	margin-bottom: 10px;
 }
 
 #loginButton

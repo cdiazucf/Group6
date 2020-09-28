@@ -4,6 +4,7 @@ var userId = 0;
 var contactsList;
 var curEditId;
 var curPage = 1;
+var resetTimer;
 
 function login() 
 {
@@ -208,7 +209,7 @@ function showContacts()
 				contacts += "					<th>Address</th>\n";
 				contacts += "					<th>Phone</th>\n";	
 				contacts += "					<th>Email</th>\n";
-				contacts += "					<th>Actions</th>\n";
+				contacts += "					<th class=\"actionHeader\">Actions</th>\n";
 				contacts += "				</tr>\n";
 				contacts += "			</thead>\n";
 				contacts += "			<tbody>\n";
@@ -221,7 +222,7 @@ function showContacts()
 					contacts += "					<td>" + contactsList[i][4] + "</td>\n";
 					contacts += "					<td>" + contactsList[i][6] + "</td>\n";
 					contacts += "					<td>" + contactsList[i][5] + "</td>\n";
-					contacts += "					<td><button class=\"actionBtn\" title=\"Update\" onclick=\"showForm(" + i + ");\"><svg width=\"1em\" height=\"1em\" viewBox=\"0 0 16 16\" class=\"bi bi-pencil-square editIcon\" fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z\"/><path fill-rule=\"evenodd\" d=\"M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z\"/></svg></button>";
+					contacts += "					<td class=\"actionHeader\"><button class=\"actionBtn\" title=\"Update\" onclick=\"showForm(" + i + ");\"><svg width=\"1em\" height=\"1em\" viewBox=\"0 0 16 16\" class=\"bi bi-pencil-square editIcon\" fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z\"/><path fill-rule=\"evenodd\" d=\"M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z\"/></svg></button>";
 					contacts += "					<button class=\"actionBtn\" title=\"Delete\" onclick=\"deleteContact(" + contactsList[i][0] + ");\"><svg width=\"1em\" height=\"1em\" viewBox=\"0 0 16 16\" class=\"bi bi-x deleteIcon\" fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\"><path fill-rule=\"evenodd\" d=\"M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z\"/></svg></button></td>\n";
 					contacts += "				</tr>\n";
 				}
@@ -242,7 +243,7 @@ function showContacts()
 	{
 		document.getElementById("errorShowContacts").innerHTML = "She turned me into a newt!: " + err.message;
 		document.getElementById("errorShowContacts").style.display = "block";
-		setTimeout(function(){document.getElementById("errorShowContacts").style.display = "none";}, 3000);
+		setTimeout(function(){document.getElementById("errorShowContacts").style.display = "none";}, 8000);
 	}
 }
 
@@ -266,7 +267,9 @@ function showPrev()
 
 function showForm(editId)
 {
+	resetStatus();
 	document.getElementById("pages").innerHTML = "";
+	// If Edit
 	if(editId == -1)
 	{
 		document.getElementById("addupdateTitle").innerHTML = "Add Contact";
@@ -282,6 +285,7 @@ function showForm(editId)
 		document.getElementById("phone").value = "";
 		document.getElementById("email").value = "";
 	}
+	// If Add
 	else
 	{
 		var addressArray = contactsList[editId][4].split(", ");
@@ -334,7 +338,7 @@ function add()
 	{
 		document.getElementById("errorAdd").innerHTML = "Those fields are empty! You're just banging them together!";
 		document.getElementById("errorAdd").style.display = "block";
-		setTimeout(function(){document.getElementById("errorAdd").style.display = "none";}, 3000);
+		setTimeout(function(){document.getElementById("errorAdd").style.display = "none";}, 8000);
 		return;
 	}
 	
@@ -351,7 +355,7 @@ function add()
 				console.log(jsonResponse); //************************debug*************
 				document.getElementById("successShowContacts").innerHTML = "Who are you who are so wise in the ways of science? Contact Added";
 				document.getElementById("successShowContacts").style.display = "block";
-				setTimeout(function(){document.getElementById("successShowContacts").style.display = "none";}, 3000);
+				resetTimer = setTimeout(function(){document.getElementById("successShowContacts").style.display = "none";}, 8000);
 				showContacts();
 			}
 		};
@@ -364,7 +368,7 @@ function add()
 	{
 		document.getElementById("errorAdd").innerHTML = "She turned me into a newt!: " + err.message;
 		document.getElementById("errorAdd").style.display = "block";
-		setTimeout(function(){document.getElementById("errorAdd").style.display = "none";}, 3000);
+		setTimeout(function(){document.getElementById("errorAdd").style.display = "none";}, 8000);
 	}
 }
 
@@ -392,7 +396,8 @@ function updateContact()
 				var jsonResponse = JSON.parse(xhr.responseText);
 				document.getElementById("successShowContacts").innerHTML = "It's Just a Flesh Wound! Contact Updated";
 				document.getElementById("successShowContacts").style.display = "block";
-				setTimeout(function(){document.getElementById("successShowContacts").style.display = "none";}, 3000);
+				clearTimeout(resetTimer);
+				setTimeout(function(){document.getElementById("successShowContacts").style.display = "none";}, 8000);
 				showContacts();
 			}
 		};
@@ -405,7 +410,7 @@ function updateContact()
 	{
 		document.getElementById("errorAdd").innerHTML = "She turned me into a newt!: " + err.message;
 		document.getElementById("errorAdd").style.display = "block";
-		setTimeout(function(){document.getElementById("errorAdd").style.display = "none";}, 3000);
+		setTimeout(function(){document.getElementById("errorAdd").style.display = "none";}, 8000);
 	}
 }
 
@@ -424,7 +429,8 @@ function deleteContact(id)
 					var jsonResponse = JSON.parse(xhr.responseText);
 					document.getElementById("successShowContacts").innerHTML = "It's Made of Wood! Contact Deleted";
 					document.getElementById("successShowContacts").style.display = "block";
-					setTimeout(function(){document.getElementById("successShowContacts").style.display = "none";}, 3000);
+					clearTimeout(resetTimer);
+					setTimeout(function(){document.getElementById("successShowContacts").style.display = "none";}, 8000);
 					showContacts();
 				}
 			};
@@ -437,7 +443,7 @@ function deleteContact(id)
 		{
 			document.getElementById("errorAdd").innerHTML = "She turned me into a newt!: " + err.message;
 			document.getElementById("errorAdd").style.display = "block";
-			setTimeout(function(){document.getElementById("errorAdd").style.display = "none";}, 3000);
+			setTimeout(function(){document.getElementById("errorAdd").style.display = "none";}, 8000);
 		}
 	}
 }

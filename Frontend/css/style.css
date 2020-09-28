@@ -58,10 +58,9 @@ html
 	font-size: 60px;
 	font-family: Old English Text MT;
 	background-color: rgba(204,174,142,.6);
-	width: 50%;
+	width: 100%;
 	margin: auto;
-	border-radius: 25px;
-	min-width: 350px;
+	max-width: 1280px;
 }
 
 h2
@@ -77,15 +76,16 @@ p
 	text-align: center;
 	font-weight: bold;	
 	font-size: 25px;
-	width: 40%;
+	width: 100%;
 	margin: auto;
-	border-radius: 15px;
+	max-width: 1280px;
 }
 
 .actionBtn
 {
 	background: none;
 	border: none;
+	padding: 0;
 }
 
 .editIcon
@@ -93,6 +93,7 @@ p
 	color: #41d02c;
 	height: 30px;
 	width: 30px;
+	margin-right: 20px;
 }
 
 .deleteIcon
@@ -112,7 +113,7 @@ p
 #addInputs
 {
 	border: solid 1px #000;
-	width: 40%;
+	width: 80%;
 	margin: 20px auto 0 auto;
 	display: none;
 	background-color: rgba(0,0,0, 0.4);
@@ -128,6 +129,12 @@ p
 #pages
 {
 	display: inline;
+}
+
+#displayContacts
+{
+    max-width: 1280px;
+    margin: auto;
 }
 
 #loginButton
@@ -157,7 +164,7 @@ p
 #registerLink
 {
 	width: 75%;
-	margin: 0px auto 10px auto;
+	margin: 0 auto 10px auto;
 	text-align: center;
 	color: #ffc414;
 }
@@ -176,6 +183,7 @@ p
 {
 	background: url("../images/contactsBanner.jpg") no-repeat fixed center -50px;
 	height: 250px;
+	max-height: 250px;
 }
 
 .mypage-link-current

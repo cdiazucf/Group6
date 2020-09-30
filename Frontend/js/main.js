@@ -1,4 +1,6 @@
 var urlBase = "http://contactsoftheroundtable.info";
+
+// Global Variables to access user during session
 var registerFlag = false;
 var userId = 0;
 var contactsList;
@@ -6,24 +8,31 @@ var curEditId;
 var curPage = 1;
 var resetTimer;
 
+
 function login() 
 {
+	// Create login variables and grab values from text boxes
 	var username = document.getElementById("username").value;
 	var password = document.getElementById("password").value;
 	var firstName = "";
 	var lastName = "";
 	var hash = md5(password);
+	
+	// Remove any status messages to user
 	document.getElementById("validStatus").style.display = "none";
 	document.getElementById("invalidStatus").style.display = "none";
 	
 		
+	// Login
 	if(!registerFlag)
 	{
+		// Create JSON with login information
 		var jsonPayload = '{"username" : "' + username + '", "password" : "' + hash + '"}';
 		var xhr = new XMLHttpRequest();
 		
 		try
 		{
+			// Make sure it's connected to server
 			xhr.onreadystatechange = function(){
 				try
 				{
@@ -32,6 +41,7 @@ function login()
 						var jsonResponse = JSON.parse(xhr.responseText);
 						userId = jsonResponse.ID;
 						
+						// User info not matched to database
 						if(userId < 1)
 						{
 							document.getElementById("invalidStatus").innerHTML = "None Shall Pass! : Invalid Login";
@@ -42,11 +52,13 @@ function login()
 						firstName = jsonResponse.Firstname;
 						lastName = jsonResponse.Lastname;
 						
+						// Send database user information to cookie
 						saveCookie(firstName, lastName, userId);
 						
+						// Upon successful login, go to contacts page
 						window.location.href = "contacts.html";
 					}
-				}
+				}				
 				catch(err)
 				{
 					document.getElementById("invalidStatus").innerHTML = "She turned me into a newt!: An Error has Occurred" ;
@@ -54,6 +66,7 @@ function login()
 				}
 			};
 		
+			// Make connection to login endpoint
 			xhr.open("POST", urlBase + "/api/login.php", true);
 			xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 			xhr.send(jsonPayload);
@@ -64,35 +77,43 @@ function login()
 			document.getElementById("invalidStatus").style.display = "block";
 		}
 	}
+	// Register a new user
 	else
 	{
+		// Grab values from text boxes
 		firstName = document.getElementById("fName").value;
 		lastName = document.getElementById("lName").value;
+		
+		// Make sure fields are not empty
 		if((firstName == "") || (lastName == "") || (username == "") || (password == ""))
 		{
+			// Display error message
 			document.getElementById("invalidStatus").innerHTML = "Those fields are empty! You're just banging them together!";
 			document.getElementById("invalidStatus").style.display = "block";
 			return;
 		}
 		
+		// create JSON with registration information
 		var jsonPayload = '{"firstname" : "' + firstName + '", "lastname" : "' + lastName + '", "username" : "' + username + '", "password" : "' + hash + '"}';
 		var xhr = new XMLHttpRequest();
 		
 		try
 		{
+			// Make sure it's connected to server
 			xhr.onreadystatechange = function()
 			{
 				if(this.readyState == 4)
 				{
 					var jsonResponse = JSON.parse(xhr.responseText);
-					console.log(jsonResponse); //*********************debug**************
 					
+					// User registration error
 					if(jsonResponse.Error != "")
 					{
 						document.getElementById("invalidStatus").innerHTML = "Are you suggesting coconuts migrate?!: " + jsonResponse.Error;
 						document.getElementById("invalidStatus").style.display = "block";
 						return;
 					}
+					// If registration successful, clear boxes and go back to login screen
 					register();
 					document.getElementById("validStatus").innerHTML = "I'm not dead! I feel happy! Registration Successful!";
 					document.getElementById("validStatus").style.display = "block";
@@ -100,6 +121,7 @@ function login()
 				}
 			};
 		
+			// Make connection to resgisterUser endpoint
 			xhr.open("POST", urlBase + "/api/registerUser.php", true);
 			xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 			xhr.send(jsonPayload);
@@ -114,6 +136,7 @@ function login()
 
 function register()
 {
+	// Clears text boxes and any status messages
 	document.getElementById("validStatus").style.display = "none";
 	document.getElementById("invalidStatus").style.display = "none";
 	document.getElementById("username").value = "";
@@ -121,6 +144,7 @@ function register()
 	document.getElementById("fName").value = "";
 	document.getElementById("lName").value = "";
 	
+	// If currently in the login screen and "register here" link is pressed, change to registration screen
 	if(!registerFlag)
 	{
 		document.getElementById("loginButton").innerHTML = "Register";
@@ -128,6 +152,7 @@ function register()
 		registerFlag = true;
 		document.getElementById("nameFields").style.display = "block";
 	}
+	// If user currently in the register screen and "login here" link is pressed, change to login screen
 	else
 	{
 		document.getElementById("loginButton").innerHTML = "Login";
@@ -143,6 +168,7 @@ function logout()
 	window.location.href = urlBase;
 }
 
+// Function called before show contacts to clear status messages and search field as well as sets current pagination to 1
 function showMyContacts()
 {
 	document.getElementById("searchField").value = "";
@@ -151,8 +177,10 @@ function showMyContacts()
 	showContacts();
 }
 
+// Function that displays the contacts in a table dynamically
 function showContacts()
 {			
+	// Clear all text boxes in the add contacts form
 	document.getElementById("fName").value = "";
 	document.getElementById("lName").value = "";
 	document.getElementById("address1").value = "";
@@ -163,27 +191,32 @@ function showContacts()
 	document.getElementById("phone").value = "";
 	document.getElementById("email").value = "";
 	
+	// Create JSON with search box information
 	var jsonPayload = '{"userID" : ' + userId + ', "criteria" : "' + document.getElementById("searchField").value + '", "pageNum" : ' + curPage + '}';
-	console.log(jsonPayload); //*********************debug**************
 	var xhr = new XMLHttpRequest();
 		
 	try
 	{
+		// Make sure it's connected to server
 		xhr.onreadystatechange = function()
 		{
 			if(this.readyState == 4 && this.status == 200)
 			{
 				var jsonResponse = JSON.parse(xhr.responseText);
-				console.log(jsonResponse); //*********************debug**************
 				
+				// Calculate total number of pages needed for contacts
 				var totalPages = Math.ceil(jsonResponse.NumRows/10);
+				
+				// Variable containing HTML to dynmically create contact table pagination
 				var pageList = "<ul class=\"pagination justify-content-center\">";
 				
+				// Creates the pagination based on value of total pages
 				if(curPage == 1)
 					pageList += "<li class=\"page-item disabled\"><a class=\"page-link\" href=\"\" tabindex=\"-1\" aria-disabled=\"true\">Previous</a></li>";
 				else
 					pageList += "<li class=\"page-item\"><a class=\"page-link mypage-link\" href=\"Javascript: showPrev();\" tabindex=\"-1\">Previous</a></li>";
 
+				// Creates the pagination buttons
 				for(i = 1; i <= totalPages; i++)
 				{
 					if(i == curPage)
@@ -192,15 +225,18 @@ function showContacts()
 						pageList += "<li class=\"page-item\"><a class=\"page-link mypage-link\" href=\"Javascript: showcurPage(" + i + ");\">" + i + "</a></li>";
 				}
 				
+				// Removes or shows next and previous buttons depending on need
 				if(curPage < totalPages)
 					pageList += "<li class=\"page-item\"><a class=\"page-link mypage-link\" href=\"Javascript: showNext();\" tabindex=\"-1\">Next</a></li>";
 				else
 					pageList += "<li class=\"page-item disabled\"><a class=\"page-link\" href=\"\" tabindex=\"-1\" aria-disabled=\"true\">Next</a></li>";
 				
+				// Adds the HTML to show the pagination
 				document.getElementById("pages").innerHTML = pageList + "</ul>";							
 				
 				contactsList = jsonResponse.Contacts;
 
+				// Variable containing HTML to dynamically create contact table
 				var contacts = "		<table class=\"table table-dark table-hover\">\n";
 				contacts += "			<thead>\n";
 				contacts += "				<tr>\n";
@@ -214,6 +250,7 @@ function showContacts()
 				contacts += "			</thead>\n";
 				contacts += "			<tbody>\n";
 				
+				// Adds each contact returned from database to the HTML variable
 				for(i = 0; i < jsonResponse.TotalContacts; i++)
 				{
 					contacts += "				<tr>\n";
@@ -229,12 +266,14 @@ function showContacts()
 				contacts += "			</tbody>\n";
 				contacts += "		</table>\n";
 				
+				// Shows the contact table
 				document.getElementById("displayContacts").innerHTML = contacts;
 				document.getElementById("searchBar").style.display = "block";
 				document.getElementById("addInputs").style.display = "none";
 			}
 		};
 
+		// Make connection to search contacts endpoint
 		xhr.open("POST", urlBase + "/api/searchContacts.php", true);
 		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 		xhr.send(jsonPayload);
@@ -247,29 +286,35 @@ function showContacts()
 	}
 }
 
+// Used to update current page to next page of contacts in pagination
 function showNext()
 {
 	curPage++;
 	showContacts();
 }
 
+// Sets current page in contacts pagination
 function showcurPage(pageNum)
 {
 	curPage = pageNum;
 	showContacts();
 }
 
+// Used to update current page to previous page of contacts in pagination
 function showPrev()
 {
 	curPage--;
 	showContacts();
 }
 
+// Changes add contact form depending on Edit or Add new
 function showForm(editId)
 {
+	// Reset all status messages first and remove contact table 
 	resetStatus();
 	document.getElementById("pages").innerHTML = "";
-	// If Edit
+	
+	// If adding new contact
 	if(editId == -1)
 	{
 		document.getElementById("addupdateTitle").innerHTML = "Add Contact";
@@ -285,7 +330,8 @@ function showForm(editId)
 		document.getElementById("phone").value = "";
 		document.getElementById("email").value = "";
 	}
-	// If Add
+	
+	// If editing contact
 	else
 	{
 		var addressArray = contactsList[editId][4].split(", ");
@@ -321,9 +367,13 @@ function showForm(editId)
 	document.getElementById("displayContacts").innerHTML = "";
 }
 
+// Function that adds contact in server
 function add()
 {
+	// Variable that contains new contact information
 	var contact = {};
+	
+	// Adds all necessary fields for adding contact into database to variable
 	contact.userID = userId;
 	contact.firstname = document.getElementById("fName").value;
 	contact.lastname = document.getElementById("lName").value;
@@ -334,7 +384,8 @@ function add()
 	contact.phone = document.getElementById("phone").value;
 	contact.email = document.getElementById("email").value;
 	
-		if(contact.firstname == "")
+	// Verifies contact at least has a first name
+	if(contact.firstname == "")
 	{
 		document.getElementById("errorAdd").innerHTML = "Those fields are empty! You're just banging them together!";
 		document.getElementById("errorAdd").style.display = "block";
@@ -342,17 +393,18 @@ function add()
 		return;
 	}
 	
+	// Create JSON from contact variable
 	var jsonPayload = JSON.stringify(contact);
 	var xhr = new XMLHttpRequest();
 		
 	try
 	{
+		// Make sure it's connected to server
 		xhr.onreadystatechange = function()
 		{
 			if(this.readyState == 4 && this.status == 200)
 			{
 				var jsonResponse = JSON.parse(xhr.responseText);
-				console.log(jsonResponse); //************************debug*************
 				document.getElementById("successShowContacts").innerHTML = "Who are you who are so wise in the ways of science? Contact Added";
 				document.getElementById("successShowContacts").style.display = "block";
 				resetTimer = setTimeout(function(){document.getElementById("successShowContacts").style.display = "none";}, 8000);
@@ -360,6 +412,7 @@ function add()
 			}
 		};
 	
+		// Make connection to add contact endpoint
 		xhr.open("POST", urlBase + "/api/addContact.php", true);
 		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 		xhr.send(jsonPayload);
@@ -372,9 +425,13 @@ function add()
 	}
 }
 
+// Function that updates contact in server
 function updateContact()
 {
+	// Variable that contains contact's new information
 	var contact = {};
+	
+	// Adds all necessary fields for updating contact in database to variable
 	contact.ID = curEditId;
 	contact.firstname = document.getElementById("fName").value;
 	contact.lastname = document.getElementById("lName").value;
@@ -385,11 +442,13 @@ function updateContact()
 	contact.phone = document.getElementById("phone").value;
 	contact.email = document.getElementById("email").value;
 	
+	// Create JSON from contact variable
 	var jsonPayload = JSON.stringify(contact);
 	var xhr = new XMLHttpRequest();
 	
 	try
 	{
+		// Make sure it's connected to server
 		xhr.onreadystatechange = function(){
 			if(this.readyState == 4 && this.status == 200)
 			{
@@ -402,6 +461,7 @@ function updateContact()
 			}
 		};
 	
+		// Make connection to update contact endpoint
 		xhr.open("POST", urlBase + "/api/updateContact.php", true);
 		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 		xhr.send(jsonPayload);
@@ -414,15 +474,18 @@ function updateContact()
 	}
 }
 
+// Function that deletes contact from database
 function deleteContact(id)
 {
 	if(confirm("Does it weigh as much as a duck?: Delete"))
 	{
+		// Create JSON with ID of contact being deleted
 		var jsonPayload = '{"ID" : "' + id + '"}';
 		var xhr = new XMLHttpRequest();
 		
 		try
 		{
+			// Make sure it's connected to server
 			xhr.onreadystatechange = function(){
 				if(this.readyState == 4 && this.status == 200)
 				{
@@ -435,6 +498,7 @@ function deleteContact(id)
 				}
 			};
 		
+			// Make connection to delete contact endpoint
 			xhr.open("POST", urlBase + "/api/deleteContact.php", true);
 			xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 			xhr.send(jsonPayload);
@@ -448,6 +512,7 @@ function deleteContact(id)
 	}
 }
 
+// Function used to reset status messages to user
 function resetStatus()
 {
 	document.getElementById("errorShowContacts").style.display = "none";
@@ -455,6 +520,7 @@ function resetStatus()
 	document.getElementById("successShowContacts").style.display = "none";
 }
 
+// Function that reads the cookie
 function readCookie()
 {
 	resetStatus();
@@ -490,6 +556,7 @@ function readCookie()
 	}
 }
 
+// Function that saves the cookie
 function saveCookie(firstName, lastName, userId)
 {
 	var minutes = 20;

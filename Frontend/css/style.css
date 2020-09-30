@@ -145,6 +145,7 @@ p
 #successShowContacts, #errorShowContacts
 {
 	margin-bottom: 10px;
+	display: none;
 }
 
 #loginButton

@@ -131,6 +131,13 @@ p
 	margin-right: 0 !important;
 }
 
+#reqField
+{
+	display: inline;
+	color: #F48E8E;
+	font-size: 0.8rem;
+}
+
 #pages
 {
 	display: inline;
